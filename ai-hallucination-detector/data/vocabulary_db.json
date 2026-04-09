@@ -1,0 +1,659 @@
+{
+  "scientific": {
+    "极高风险": {
+      "量子": {
+        "正确语境": [
+          "量子计算",
+          "量子通信",
+          "量子力学",
+          "量子物理"
+        ],
+        "伪科学场景": [
+          "量子养生",
+          "量子水",
+          "量子医学",
+          "量子能量"
+        ]
+      },
+      "干细胞": {
+        "正确语境": [
+          "再生医学",
+          "临床治疗",
+          "干细胞研究"
+        ],
+        "伪科学场景": [
+          "干细胞美容",
+          "干细胞保健品",
+          "干细胞养生"
+        ]
+      },
+      "DNA": {
+        "正确语境": [
+          "遗传学",
+          "基因检测",
+          "分子生物学"
+        ],
+        "伪科学场景": [
+          "DNA修复",
+          "DNA激活",
+          "DNA美容"
+        ]
+      },
+      "基因": {
+        "正确语境": [
+          "基因工程",
+          "遗传学",
+          "基因编辑"
+        ],
+        "伪科学场景": [
+          "基因修复",
+          "基因激活",
+          "基因养生"
+        ]
+      },
+      "石墨烯": {
+        "正确语境": [
+          "材料科学",
+          "电子器件",
+          "新能源"
+        ],
+        "伪科学场景": [
+          "石墨烯内衣",
+          "石墨烯床垫",
+          "石墨烯保健"
+        ]
+      },
+      "同位素": {
+        "正确语境": [
+          "核医学",
+          "核化学",
+          "放射性"
+        ],
+        "伪科学场景": [
+          "同位素养生",
+          "同位素能量"
+        ]
+      },
+      "辐射": {
+        "正确语境": [
+          "核物理",
+          "医学影像",
+          "放疗"
+        ],
+        "伪科学场景": [
+          "辐射调理",
+          "辐射能量",
+          "辐射养生"
+        ]
+      },
+      "量子共振技术": {
+        "正确语境": [],
+        "伪科学场景": [
+          "量子养生",
+          "量子能量",
+          "伪科学营销"
+        ]
+      }
+    },
+    "高风险": {
+      "原子": {
+        "正确语境": [
+          "原子物理",
+          "原子能",
+          "原子结构"
+        ],
+        "伪科学场景": [
+          "原子能量",
+          "原子养生"
+        ]
+      },
+      "粒子": {
+        "正确语境": [
+          "粒子物理",
+          "基本粒子",
+          "高能物理"
+        ],
+        "伪科学场景": [
+          "粒子修复",
+          "粒子能量"
+        ]
+      },
+      "纳米": {
+        "正确语境": [
+          "纳米技术",
+          "材料科学",
+          "纳米材料"
+        ],
+        "伪科学场景": [
+          "纳米养生",
+          "纳米美容",
+          "纳米保健"
+        ]
+      },
+      "细胞": {
+        "正确语境": [
+          "细胞生物学",
+          "医学",
+          "细胞治疗"
+        ],
+        "伪科学场景": [
+          "细胞再生",
+          "细胞激活",
+          "细胞养生"
+        ]
+      },
+      "免疫": {
+        "正确语境": [
+          "免疫学",
+          "医学",
+          "免疫治疗"
+        ],
+        "伪科学场景": [
+          "免疫激活",
+          "免疫调理",
+          "免疫养生"
+        ]
+      },
+      "靶向": {
+        "正确语境": [
+          "靶向治疗",
+          "医学",
+          "药物研发"
+        ],
+        "伪科学场景": [
+          "靶向养生",
+          "靶向修复"
+        ]
+      },
+      "磁场": {
+        "正确语境": [
+          "电磁学",
+          "地球物理",
+          "MRI"
+        ],
+        "伪科学场景": [
+          "磁场调理",
+          "磁场养生",
+          "磁场疗愈"
+        ]
+      },
+      "端粒": {
+        "正确语境": [
+          "分子生物学",
+          "衰老研究"
+        ],
+        "伪科学场景": [
+          "端粒延长",
+          "端粒激活"
+        ]
+      },
+      "肽": {
+        "正确语境": [
+          "生物化学",
+          "医学",
+          "蛋白质研究"
+        ],
+        "伪科学场景": [
+          "活性肽",
+          "肽能量",
+          "肽养生"
+        ]
+      }
+    },
+    "中风险": {
+      "模型": {
+        "正确语境": [
+          "机器学习",
+          "AI",
+          "数学建模"
+        ],
+        "伪科学场景": [
+          "智能模型（万能效果）"
+        ]
+      },
+      "算法": {
+        "正确语境": [
+          "计算机科学",
+          "数据分析"
+        ],
+        "伪科学场景": [
+          "算法养生",
+          "算法调理"
+        ]
+      },
+      "神经网络": {
+        "正确语境": [
+          "深度学习",
+          "AI"
+        ],
+        "伪科学场景": [
+          "神经网络激活（非技术语境）"
+        ]
+      },
+      "蛋白质": {
+        "正确语境": [
+          "生物化学",
+          "营养学"
+        ],
+        "伪科学场景": [
+          "蛋白质激活",
+          "蛋白质能量"
+        ]
+      },
+      "酶": {
+        "正确语境": [
+          "生物化学",
+          "医学"
+        ],
+        "伪科学场景": [
+          "酶激活",
+          "酶能量"
+        ]
+      },
+      "分子": {
+        "正确语境": [
+          "化学",
+          "分子生物学"
+        ],
+        "伪科学场景": [
+          "分子能量",
+          "分子调理"
+        ]
+      }
+    }
+  },
+  "professional": {
+    "金融": {
+      "极高风险": [
+        "内幕消息",
+        "稳赚不赔",
+        "保本保息",
+        "年化收益100%"
+      ],
+      "高风险": [
+        "暴涨",
+        "暴涨必买",
+        "庄家拉升",
+        "内幕票"
+      ],
+      "中风险": [
+        "投资建议",
+        "理财推荐",
+        "收益预测"
+      ]
+    },
+    "法律": {
+      "极高风险": [
+        "包赢",
+        "必胜诉",
+        "关系硬",
+        "特殊渠道"
+      ],
+      "中风险": [
+        "法律意见",
+        "风险评估"
+      ]
+    },
+    "医疗": {
+      "极高风险": [
+        "根治",
+        "百分百治愈",
+        "包治",
+        "无副作用",
+        "祖传秘方"
+      ],
+      "高风险": [
+        "疗效显著",
+        "药到病除",
+        "专家推荐"
+      ],
+      "中风险": [
+        "治疗效果",
+        "临床验证"
+      ]
+    },
+    "教育": {
+      "极高风险": [
+        "保过",
+        "包录取",
+        "内部名额",
+        "真题泄露"
+      ],
+      "高风险": [
+        "速成",
+        "7天精通",
+        "零基础高薪"
+      ],
+      "中风险": [
+        "课程效果",
+        "学习成果"
+      ]
+    },
+    "科技": {
+      "AI": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "人工智能": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "机器学习": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "深度学习": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "神经网络": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "大模型": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "AGI": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "GPU": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "算力": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "芯片": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "量子计算": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "脑机接口": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "元宇宙": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "Web3": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "区块链": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "云计算": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "边缘计算": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "物联网": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "5G": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "6G": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      }
+    },
+    "生物制药": {
+      "基因编辑": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "CRISPR": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "mRNA": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "抗体": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "疫苗": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "临床试验": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "新药": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "靶向": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "免疫疗法": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "蛋白质": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "干细胞治疗": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "基因治疗": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "CAR-T": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "PD-1": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "ADC": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "生物类似药": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "创新药": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "仿制药": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "GLP-1": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "司美格鲁肽": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      }
+    },
+    "财经": {
+      "IPO": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "融资": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "估值": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "市盈率": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "ROE": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "ROI": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "现金流": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "资产负债": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "分红": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "回购": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "并购": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "重组": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "定增": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "可转债": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "股权激励": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "ESG": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "碳中和": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "绿色金融": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "量化": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "对冲": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      }
+    },
+    "新能源": {
+      "光伏": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "储能": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "锂电": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "氢能": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "碳中和": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "新能源车": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "充电桩": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "电池回收": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "固态电池": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "钠离子电池": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "钙钛矿": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "风电": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "水电": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "核能": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "生物质能": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "智能电网": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      },
+      "虚拟电厂": {
+        "added_time": "2026-04-09",
+        "source": "auto_expansion"
+      }
+    }
+  },
+  "custom": {
+    "极高风险": {},
+    "高风险": {},
+    "中风险": {}
+  },
+  "stats": {
+    "total_detections": 5,
+    "new_vocab_added": 1,
+    "last_updated": "2026-04-09"
+  }
+}

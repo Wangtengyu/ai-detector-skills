@@ -1,0 +1,18 @@
+[
+  {
+    "vocabulary": "量子共振技术",
+    "context": "这款量子能量手环采用NASA量子共振技术研发，能够修复DNA、逆转衰老、增强免疫",
+    "risk_level": "待确认",
+    "is_correct_context": false,
+    "is_new": true,
+    "found_time": "2026-04-09T10:44:33.397654"
+  },
+  {
+    "vocabulary": "家指出该技术",
+    "context": "据《关于支持量子健康产业发展的意见》，专家指出该技术将在2026年覆盖全国所有省份。这款产品",
+    "risk_level": "待确认",
+    "is_correct_context": false,
+    "is_new": true,
+    "found_time": "2026-04-09T10:44:33.736900"
+  }
+]

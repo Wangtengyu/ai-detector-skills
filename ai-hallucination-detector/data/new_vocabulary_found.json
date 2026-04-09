@@ -1,0 +1,18 @@
+[
+  {
+    "vocabulary": "量子共振",
+    "context": "这款量子能量手环采用NASA量子共振技术研发，能够修复DNA、逆转衰老、增强",
+    "risk_level": "待确认",
+    "is_correct_context": false,
+    "is_new": true,
+    "found_time": "2026-04-09T10:56:52.607632"
+  },
+  {
+    "vocabulary": "量子纠缠",
+    "context": "天根治三高，永不复发！诺贝尔奖团队研发，量子纠缠原理，磁场共振调理，纳米级靶向治疗，百分",
+    "risk_level": "待确认",
+    "is_correct_context": false,
+    "is_new": true,
+    "found_time": "2026-04-09T13:53:45.741563"
+  }
+]
