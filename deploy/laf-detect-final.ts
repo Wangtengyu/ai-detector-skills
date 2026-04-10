@@ -21,19 +21,35 @@ export default async function (ctx: any) {
     // 处理链接：如果是URL，尝试抓取内容
     if (text.startsWith('http://') || text.startsWith('https://')) {
       try {
-        const response = await axios.get(text, { timeout: 10000 })
+        const response = await axios.get(text, {
+          timeout: 15000,
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8'
+          }
+        })
         // 简单提取文本（去除HTML标签）
-        text = response.data
+        let extractedText = response.data
           .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
           .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
           .replace(/<[^>]+>/g, ' ')
           .replace(/\s+/g, ' ')
+          .trim()
           .substring(0, 3000) // 限制长度
-        text = `【从链接提取的内容】\n${text}`
+        
+        if (extractedText.length < 50) {
+          return { 
+            success: false, 
+            error: '该链接内容过少或需要登录才能访问。请直接复制文章内容粘贴检测。' 
+          }
+        }
+        
+        text = `【从链接提取的内容】\n${extractedText}`
       } catch (e: any) {
         return { 
           success: false, 
-          error: `无法访问链接：${e.message}。请直接粘贴文章内容。` 
+          error: `⚠️ 链接访问失败。\n\n可能原因：微信公众号等平台有防盗链保护。\n\n💡 建议：复制文章内容，粘贴到输入框进行检测。` 
         }
       }
     }
@@ -151,11 +167,15 @@ ${detectiveInfo.style}
       const lowerResult = aiResult.toLowerCase()
       
       if (lowerResult.includes('高危') || 
+          lowerResult.includes('高风险') ||
           lowerResult.includes('严重') || 
           lowerResult.includes('欺诈') ||
           lowerResult.includes('骗局') ||
           lowerResult.includes('虚假宣传') ||
-          lowerResult.includes('伪科学营销')) {
+          lowerResult.includes('伪科学营销') ||
+          lowerResult.includes('极高风险') ||
+          lowerResult.includes('危险') ||
+          lowerResult.includes('诈骗')) {
         riskLevel = 'high'
       } else if (lowerResult.includes('中危') || 
                  lowerResult.includes('需注意') ||

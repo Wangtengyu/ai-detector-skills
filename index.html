@@ -336,7 +336,7 @@
             let text = '';
             const inputType = document.querySelector('[id^="btn-"].bg-purple-600')?.id.replace('btn-', '') || 'text';
             if (inputType === 'text') text = document.getElementById('inputText').value.trim();
-            else if (inputType === 'url') text = '【链接检测功能开发中】链接：' + document.getElementById('inputUrl').value.trim();
+            else if (inputType === 'url') text = document.getElementById('inputUrl').value.trim();
             if (!text) { alert('请输入要检测的内容'); return; }
             
             document.getElementById('detectBtn').disabled = true;
