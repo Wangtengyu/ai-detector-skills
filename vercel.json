@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "web/ai-detector/app.py",
+      "src": "app.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "web/ai-detector/app.py"
+      "dest": "app.py"
     }
   ]
 }
