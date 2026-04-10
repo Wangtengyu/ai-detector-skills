@@ -173,18 +173,53 @@ export default async function (ctx: any) {
 
 ${detectiveInfo.style}
 
-**重要：请在报告开头明确标注风险等级：**
+**输出格式要求（严格遵守）：**
+
 【风险等级：高危/中危/低危/安全】
 
-然后用你的角色风格分析这段内容的可疑之处，揭穿骗局。`
+## 🔍 案情分析
+[用你的角色风格分析这段内容的可疑之处]
+
+## ⚠️ 发现的疑点
+[逐条列出具体问题，每条说明为什么可疑]
+
+## 💡 断案建议
+[针对每个疑点给出具体建议]
+
+## 📞 维权渠道
+[如果是高危内容，提供举报渠道：12315（消费者投诉）、110（诈骗报警）、12386（证监会）等]
+
+请用你的侦探风格给出专业、实用、有针对性的分析。`
     } else {
-      systemPrompt = `你是专业内容审核专家。检测AI幻觉、伪科学表述、绝对化承诺、逻辑漏洞、营销骗局。
+      systemPrompt = `你是专业内容审核专家，擅长检测AI幻觉、伪科学表述、绝对化承诺、逻辑漏洞、营销骗局。
 
-**重要：请在报告开头明确标注风险等级：**
+**输出格式要求（严格遵守）：**
 
 【风险等级：高危/中危/低危/安全】
 
-然后详细分析问题。`
+## 📊 检测摘要
+[简要总结检测结果，说明风险来源]
+
+## 🔍 详细分析
+[逐项分析内容的问题，每项包括：]
+- 问题类型（如：伪科学表述、绝对化承诺、数据失实等）
+- 具体位置
+- 问题原因
+- 修正建议
+
+## 💡 操作建议
+[针对不同问题类型给出具体操作建议]
+- 如检测到伪科学 → 提示查阅权威文献
+- 如检测到绝对化承诺 → 提示修改为客观表述
+- 如检测到营销话术 → 提示警惕消费陷阱
+
+## 📞 维权渠道
+[如果是高危内容，提供具体举报渠道]
+
+## ✅ 修改示例
+[如果可能，提供修改后的建议版本]
+
+请确保分析专业、建议实用、逻辑清晰。`
     }
 
     // 调用DeepSeek AI
@@ -254,20 +289,83 @@ ${detectiveInfo.style}
     } else {
       // 关键词检测
       const issues: string[] = []
-      PSEUDO.forEach(k => { if (text.includes(k)) issues.push(`⚠️ 伪科学："${k}"`) })
-      ABSOLUTE.forEach(k => { if (text.includes(k)) issues.push(`❌ 绝对化："${k}"`) })
-      SCAM.forEach(k => { if (text.includes(k)) issues.push(`🚨 营销话术："${k}"`) })
-      FAKE.forEach(k => { if (text.includes(k)) issues.push(`🎭 疑似虚假背书："${k}"`) })
+      const suggestions: string[] = []
+      
+      PSEUDO.forEach(k => { 
+        if (text.includes(k)) {
+          issues.push(`⚠️ 伪科学表述："${k}" - 科学词汇滥用或断章取义`)
+        }
+      })
+      ABSOLUTE.forEach(k => { 
+        if (text.includes(k)) {
+          issues.push(`❌ 绝对化承诺："${k}" - 违背科学常识，涉嫌虚假宣传`)
+        }
+      })
+      SCAM.forEach(k => { 
+        if (text.includes(k)) {
+          issues.push(`🚨 营销话术："${k}" - 制造紧迫感，诱导冲动消费`)
+        }
+      })
+      FAKE.forEach(k => { 
+        if (text.includes(k)) {
+          issues.push(`🎭 疑似虚假背书："${k}" - 权威机构背书需核实`)
+        }
+      })
       
       const risk = issues.length >= 4 ? 'high' : issues.length >= 2 ? 'medium' : issues.length >= 1 ? 'low' : 'safe'
+      
+      // 根据问题类型生成针对性建议
+      if (risk === 'high') {
+        suggestions.push('🚫 立即停止使用该内容')
+        suggestions.push('📞 拨打12315投诉举报')
+        if (text.includes('原始股') || text.includes('投资')) {
+          suggestions.push('⚠️ 涉嫌非法集资，建议拨打110报警')
+        }
+        suggestions.push('📋 保留证据，截图保存')
+      } else if (risk === 'medium') {
+        if (issues.some(i => i.includes('伪科学'))) {
+          suggestions.push('📚 查阅权威科学文献验证')
+        }
+        if (issues.some(i => i.includes('绝对化'))) {
+          suggestions.push('✏️ 修改为客观表述（如"有助于"替代"根治"）')
+        }
+        if (issues.some(i => i.includes('营销话术'))) {
+          suggestions.push('🔍 多方对比，理性消费')
+        }
+        if (issues.some(i => i.includes('虚假背书'))) {
+          suggestions.push('🔎 官网核实权威背书真实性')
+        }
+        suggestions.push('👨‍⚕️ 咨询专业人士意见')
+      } else if (risk === 'low') {
+        suggestions.push('👀 人工复核内容细节')
+        suggestions.push('✅ 谨慎参考，不必过度担心')
+      } else {
+        suggestions.push('✅ 未检测到明显问题')
+        suggestions.push('🔍 建议人工复核确保准确')
+      }
+      
+      let report = ''
+      if (mode === 'fun') {
+        const detectiveNames: any = { direnjie: '狄仁杰', baoqing: '包青天', conan: '柯南', holmes: '福尔摩斯', qinfeng: '秦风' }
+        report = `【${detectiveNames[detective]}断案】\n\n`
+        if (risk === 'high') report += `发现${issues.length}处疑点，欺诈成分居多，切勿轻信！`
+        else if (risk === 'medium') report += `存在多处可疑之处，建议谨慎对待。`
+        else if (risk === 'low') report += `发现少量问题，整体风险较低。`
+        else report += `未发现明显问题，可放心使用。`
+      } else {
+        if (risk === 'high') report = `检测到 ${issues.length} 处高风险内容，建议立即停止使用并向监管部门举报。`
+        else if (risk === 'medium') report = `检测到 ${issues.length} 处中风险内容，建议仔细核实后再决定是否使用。`
+        else if (risk === 'low') report = `检测到 ${issues.length} 处低风险内容，建议人工复核。`
+        else report = `未检测到明显风险，建议人工复核确保准确。`
+      }
       
       return {
         success: true,
         data: {
           risk_level: risk,
           issues: issues,
-          report: issues.length > 0 ? `检测到 ${issues.length} 处可疑内容。` : '未检测到明显问题。',
-          suggestions: risk === 'high' ? ['删除高风险内容'] : [],
+          report: report,
+          suggestions: suggestions,
           ai_model: 'keywords'
         }
       }
