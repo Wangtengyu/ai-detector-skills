@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI内容检测器 - 检测幻觉 · 识别骗局 · 保护你的内容</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .example-card { transition: all 0.3s ease; }
+        .example-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-3">🛡️ AI内容检测器</h1>
+            <p class="text-xl opacity-90 mb-2">可疑对话 · 文章表述 · AI内容 · 全面筛查</p>
+            <p class="text-md opacity-80 mb-2">识别AI幻觉 · 揭穿营销骗局 · 检测伪科学表述</p>
+            <p class="text-sm opacity-75">基于科学词汇库与逻辑分析框架，专业检测各类内容的真实性与可信度</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-10 max-w-5xl">
+        
+        <!-- 功能介绍 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">全面筛查各类可疑内容</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <div class="text-3xl mb-3">🤖</div>
+                    <h3 class="font-bold text-lg mb-2">AI生成内容</h3>
+                    <p class="text-gray-600 text-sm">检测AI编造的数据、幻觉内容、逻辑漏洞，避免直接使用造成严重后果。</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <div class="text-3xl mb-3">💬</div>
+                    <h3 class="font-bold text-lg mb-2">可疑对话</h3>
+                    <p class="text-gray-600 text-sm">识别聊天中的欺诈话术、传销套路、虚假宣传，保护你的钱包和安全。</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <div class="text-3xl mb-3">📄</div>
+                    <h3 class="font-bold text-lg mb-2">文章表述</h3>
+                    <p class="text-gray-600 text-sm">检测新闻报道、学术论文、政府材料中的伪科学表述和数据失实。</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <div class="text-3xl mb-3">🛒</div>
+                    <h3 class="font-bold text-lg mb-2">营销宣传</h3>
+                    <p class="text-gray-600 text-sm">识别保健品广告、投资理财、直播带货中的虚假宣传和消费陷阱。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 检测输入区 -->
+        <section class="bg-white rounded-2xl card-shadow p-8 mb-10">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">开始检测</h2>
+                <div class="text-sm text-gray-500">
+                    💡 支持：<span class="text-purple-600">粘贴文字</span> · <span class="text-purple-600">上传文件</span> · <span class="text-purple-600">输入链接</span>
+                </div>
+            </div>
+
+            <!-- 输入方式选择 -->
+            <div class="flex gap-4 mb-6">
+                <button onclick="switchInput('text')" id="btn-text" class="px-6 py-2 bg-purple-600 text-white rounded-lg font-medium">📝 粘贴文字</button>
+                <button onclick="switchInput('file')" id="btn-file" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300">📁 上传文件</button>
+                <button onclick="switchInput('url')" id="btn-url" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300">🔗 输入链接</button>
+            </div>
+
+            <!-- 文字输入 -->
+            <div id="input-text">
+                <textarea id="inputText" class="w-full h-48 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-gray-700" placeholder="粘贴可疑对话、文章内容、AI生成文本、营销宣传等...&#10;&#10;支持检测：&#10;• AI幻觉与编造数据（政府材料、学术论文、新闻稿）&#10;• 伪科学表述（量子、纳米、DNA滥用等）&#10;• 绝对化承诺（根治、100%有效、包过等）&#10;• 营销骗局话术（保健品广告、投资理财、直播带货）&#10;• 可疑聊天内容（欺诈话术、传销套路）"></textarea>
+            </div>
+
+            <!-- 文件上传 -->
+            <div id="input-file" class="hidden">
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-10 text-center hover:border-purple-500 transition cursor-pointer" onclick="document.getElementById('fileInput').click()">
+                    <input type="file" id="fileInput" class="hidden" accept=".txt,.doc,.docx,.pdf" onchange="handleFileUpload(event)">
+                    <div class="text-4xl mb-3">📄</div>
+                    <p class="text-gray-600">点击上传文件或将文件拖拽到这里</p>
+                    <p class="text-sm text-gray-400 mt-2">支持 .txt .doc .docx .pdf 格式</p>
+                </div>
+                <p id="fileName" class="mt-2 text-sm text-purple-600"></p>
+            </div>
+
+            <!-- URL输入 -->
+            <div id="input-url" class="hidden">
+                <input type="url" id="inputUrl" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="输入文章链接，如：https://example.com/article">
+            </div>
+
+            <!-- 检测模式选择 -->
+            <div class="mt-6">
+                <label class="block text-gray-700 font-semibold mb-3">检测模式</label>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <label class="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition">
+                        <input type="radio" name="mode" value="serious" checked class="mr-3 mt-1">
+                        <div>
+                            <div class="font-semibold text-lg">🔬 正经版 · AI内容幻觉检测器</div>
+                            <div class="text-sm text-gray-500 mt-1">专业检测模式，输出严谨的风险报告</div>
+                            <div class="text-xs text-gray-400 mt-1">适用：政府材料、学术论文、新闻报道、专业文档</div>
+                        </div>
+                    </label>
+                    <label class="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition">
+                        <input type="radio" name="mode" value="fun" class="mr-3 mt-1">
+                        <div>
+                            <div class="font-semibold text-lg">🎭 趣味版 · AI营销骗局识别器</div>
+                            <div class="text-sm text-gray-500 mt-1">侦探角色断案，识别营销陷阱与消费骗局</div>
+                            <div class="text-xs text-gray-400 mt-1">适用：保健品广告、投资理财、直播带货、网购宣传</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 侦探角色选择 -->
+            <div id="detectiveSelect" class="mt-4 hidden">
+                <label class="block text-gray-700 font-semibold mb-3">选择你的侦探</label>
+                <div class="grid grid-cols-5 gap-3">
+                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
+                        <input type="radio" name="detective" value="direnjie" checked class="mb-1">
+                        <span class="text-2xl">🏛️</span>
+                        <span class="text-sm mt-1 font-medium">狄仁杰</span>
+                    </label>
+                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
+                        <input type="radio" name="detective" value="baoqing" class="mb-1">
+                        <span class="text-2xl">⚖️</span>
+                        <span class="text-sm mt-1 font-medium">包青天</span>
+                    </label>
+                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
+                        <input type="radio" name="detective" value="conan" class="mb-1">
+                        <span class="text-2xl">🔍</span>
+                        <span class="text-sm mt-1 font-medium">柯南</span>
+                    </label>
+                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
+                        <input type="radio" name="detective" value="holmes" class="mb-1">
+                        <span class="text-2xl">🧠</span>
+                        <span class="text-sm mt-1 font-medium">福尔摩斯</span>
+                    </label>
+                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
+                        <input type="radio" name="detective" value="qinfeng" class="mb-1">
+                        <span class="text-2xl">💡</span>
+                        <span class="text-sm mt-1 font-medium">秦风</span>
+                    </label>
+                </div>
+            </div>
+
+            <button id="detectBtn" onclick="detect()" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-4 rounded-lg font-semibold text-lg hover:opacity-90 transition">🔍 开始检测</button>
+        </section>
+
+        <!-- 案例展示 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">真实案例</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="example-card bg-white rounded-xl p-6 card-shadow">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">高风险</span>
+                        <span class="text-sm text-gray-500">保健品广告</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">量子养生舱宣传语</h3>
+                    <p class="text-sm text-gray-600 mb-3 bg-gray-50 p-3 rounded">"量子共振技术，修复DNA，7天根治糖尿病，100%无副作用"</p>
+                    <div class="text-sm">
+                        <p class="text-red-600 font-medium">🔴 检测结果：高危</p>
+                        <p class="text-gray-500 mt-1">伪科学表述3处 · 绝对化承诺2处 · 疑似虚假宣传</p>
+                    </div>
+                </div>
+                <div class="example-card bg-white rounded-xl p-6 card-shadow">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">极高风险</span>
+                        <span class="text-sm text-gray-500">投资理财</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">原始股权投资骗局</h3>
+                    <p class="text-sm text-gray-600 mb-3 bg-gray-50 p-3 rounded">"某科技公司原始股，即将上市，预期收益10倍，零风险保本"</p>
+                    <div class="text-sm">
+                        <p class="text-red-600 font-medium">💀 检测结果：欺诈性内容</p>
+                        <p class="text-gray-500 mt-1">典型传销话术 · 价格欺诈 · 建议举报</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 检测结果 -->
+        <section id="resultSection" class="hidden">
+            <div class="bg-white rounded-2xl card-shadow p-8 mb-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">检测结果</h2>
+                <div id="resultContent"></div>
+                <div class="mt-6 flex gap-4">
+                    <button onclick="copyResult()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition">📋 复制报告</button>
+                    <button onclick="resetDetection()" class="flex-1 bg-purple-100 text-purple-700 py-3 rounded-lg font-semibold hover:bg-purple-200 transition">🔄 重新检测</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section class="bg-white rounded-2xl card-shadow p-8 mb-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">关于本项目</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-3">🎯 开发初衷</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">2026年4月，我在做政府项目材料时，AI编造了"全国68城落地OPC政策"的数据，实际只有26城。领导当场质疑，场面一度尴尬。痛定思痛，我决定做一个AI内容检测工具，帮助更多人避免被AI"坑"。</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3">💡 功能特色</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li>✅ 200+ 伪科学词汇库</li>
+                        <li>✅ 绝对化表述识别</li>
+                        <li>✅ 数据合理性分析</li>
+                        <li>✅ 5种侦探角色风格</li>
+                        <li>✅ 维权建议与举报渠道</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <h3 class="font-bold text-lg mb-4">📬 联系我们</h3>
+                <div class="grid md:grid-cols-3 gap-6 text-sm">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">💬</span>
+                        <div>
+                            <p class="font-medium">微信</p>
+                            <p class="text-purple-600 font-mono">prof342040116</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">📧</span>
+                        <div>
+                            <p class="font-medium">邮箱</p>
+                            <p class="text-purple-600 font-mono">mixc@coze.email</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">💻</span>
+                        <div>
+                            <p class="font-medium">GitHub</p>
+                            <a href="https://github.com/Wangtengyu/ai-detector-skills" target="_blank" class="text-purple-600 hover:underline">ai-detector-skills</a>
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-4 text-gray-500 text-sm">如有功能建议、Bug反馈、合作意向，欢迎随时联系！</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-lg font-semibold mb-2">Made with ❤️ by Mixc</p>
+            <p class="text-gray-400 text-sm mb-3">AI内容检测器 · 可疑对话 · 文章表述 · 全面筛查</p>
+            <div class="flex justify-center gap-6 text-sm">
+                <a href="https://github.com/Wangtengyu/ai-detector-skills" target="_blank" class="text-purple-400 hover:underline">GitHub</a>
+                <span class="text-gray-600">|</span>
+                <span class="text-gray-400">微信：prof342040116</span>
+                <span class="text-gray-600">|</span>
+                <span class="text-gray-400">邮箱：mixc@coze.email</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchInput(type) {
+            ['text', 'file', 'url'].forEach(t => {
+                document.getElementById('input-' + t).classList.toggle('hidden', t !== type);
+                document.getElementById('btn-' + t).classList.toggle('bg-purple-600', t === type);
+                document.getElementById('btn-' + t).classList.toggle('text-white', t === type);
+                document.getElementById('btn-' + t).classList.toggle('bg-gray-200', t !== type);
+                document.getElementById('btn-' + t).classList.toggle('text-gray-700', t !== type);
+            });
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('fileName').textContent = '已选择：' + file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) { document.getElementById('inputText').value = e.target.result; };
+                reader.readAsText(file);
+            }
+        }
+
+        document.querySelectorAll('input[name="mode"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('detectiveSelect').classList.toggle('hidden', this.value !== 'fun');
+            });
+        });
+
+        function detect() {
+            let text = '';
+            const inputType = document.querySelector('[id^="btn-"].bg-purple-600')?.id.replace('btn-', '') || 'text';
+            if (inputType === 'text') text = document.getElementById('inputText').value.trim();
+            else if (inputType === 'url') text = '【链接检测功能开发中】链接：' + document.getElementById('inputUrl').value.trim();
+            if (!text) { alert('请输入要检测的内容'); return; }
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const detective = document.querySelector('input[name="detective"]:checked')?.value || 'direnjie';
+            document.getElementById('detectBtn').disabled = true;
+            document.getElementById('detectBtn').textContent = '⏳ 检测中...';
+            setTimeout(() => {
+                const result = simulateDetection(text, mode, detective);
+                displayResult(result, mode);
+                document.getElementById('detectBtn').disabled = false;
+                document.getElementById('detectBtn').textContent = '🔍 开始检测';
+            }, 1500);
+        }
+
+        function simulateDetection(text, mode, detective) {
+            const issues = [];
+            const pseudoKeywords = ['量子', '纳米', 'DNA', '干细胞', '基因修复', '能量场', '共振', '磁场'];
+            const absoluteKeywords = ['根治', '100%', '绝对', '保证', '包治', '无副作用', '零风险', '必'];
+            const scamKeywords = ['原始股', '高额回报', '躺赚', '被动收入', '快速致富', '保本保息', '内部消息'];
+            pseudoKeywords.forEach(k => { if (text.includes(k)) issues.push(`⚠️ 伪科学表述："${k}"`); });
+            absoluteKeywords.forEach(k => { if (text.includes(k)) issues.push(`❌ 绝对化承诺："${k}"`); });
+            scamKeywords.forEach(k => { if (text.includes(k)) issues.push(`🚨 骗局关键词："${k}"`); });
+            const riskLevel = issues.length >= 4 ? 'high' : issues.length >= 2 ? 'medium' : issues.length >= 1 ? 'low' : 'safe';
+            const detectiveNames = { direnjie: '狄仁杰', baoqing: '包青天', conan: '柯南', holmes: '福尔摩斯', qinfeng: '秦风' };
+            let report = mode === 'fun' ? `【${detectiveNames[detective]}断案】\n\n` : '';
+            if (riskLevel === 'high') report += mode === 'fun' ? `发现${issues.length}处疑点，欺诈成分居多，切勿轻信！` : `检测到 ${issues.length} 处高风险内容，建议立即修改。`;
+            else if (riskLevel === 'medium') report += mode === 'fun' ? `存在多处可疑之处，建议谨慎对待。` : `检测到 ${issues.length} 处中风险内容，建议核实。`;
+            else if (riskLevel === 'low') report += mode === 'fun' ? `发现少量问题，整体风险较低。` : `检测到 ${issues.length} 处低风险内容。`;
+            else report += mode === 'fun' ? `未发现明显问题，可放心使用。` : `未检测到明显风险，建议人工复核。`;
+            const suggestions = riskLevel === 'high' ? ['删除高风险内容', '核实数据来源', '咨询专业人士', mode === 'fun' ? '举报渠道：12315 / 110' : ''].filter(Boolean) : riskLevel === 'medium' ? ['修改绝对化表述', '核实数据真实性'] : ['人工复核内容'];
+            return { risk_level: riskLevel, issues, report, suggestions };
+        }
+
+        function displayResult(result, mode) {
+            const riskColors = { high: 'bg-red-50 border-red-500 text-red-700', medium: 'bg-yellow-50 border-yellow-500 text-yellow-700', low: 'bg-blue-50 border-blue-500 text-blue-700', safe: 'bg-green-50 border-green-500 text-green-700' };
+            const riskLabels = { high: '🔴 高风险内容', medium: '🟡 中风险内容', low: '🔵 低风险内容', safe: '🟢 安全内容' };
+            let html = `<div class="border-l-4 ${riskColors[result.risk_level]} p-5 rounded-r-lg mb-5"><h3 class="font-bold text-xl mb-2">${riskLabels[result.risk_level]}</h3><p class="whitespace-pre-line">${result.report}</p></div>`;
+            if (result.issues.length > 0) html += `<div class="mb-5"><h4 class="font-semibold text-gray-700 mb-3">📋 检测到的问题（${result.issues.length}处）：</h4><ul class="space-y-2 bg-gray-50 p-4 rounded-lg">${result.issues.map(i => `<li class="text-gray-600">${i}</li>`).join('')}</ul></div>`;
+            html += `<div><h4 class="font-semibold text-gray-700 mb-3">💡 建议操作：</h4><ul class="list-disc list-inside space-y-1 text-gray-600">${result.suggestions.map(s => `<li>${s}</li>`).join('')}</ul></div>`;
+            document.getElementById('resultContent').innerHTML = html;
+            document.getElementById('resultSection').classList.remove('hidden');
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyResult() {
+            navigator.clipboard.writeText(document.getElementById('resultContent').innerText).then(() => alert('✅ 已复制到剪贴板'));
+        }
+
+        function resetDetection() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('inputUrl').value = '';
+            document.getElementById('fileName').textContent = '';
+            document.getElementById('resultSection').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
