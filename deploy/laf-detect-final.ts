@@ -29,23 +29,77 @@ export default async function (ctx: any) {
             'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8'
           }
         })
-        // 简单提取文本（去除HTML标签）
-        let extractedText = response.data
+        
+        const html = response.data
+        
+        // 提取标题
+        let title = ''
+        const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i)
+        if (titleMatch) title = titleMatch[1].trim()
+        
+        // 提取描述
+        let description = ''
+        const descMatch = html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i)
+        if (descMatch) description = descMatch[1].trim()
+        
+        // 提取正文（优先提取article、section、main等语义标签）
+        let bodyText = ''
+        
+        // 移除脚本、样式、导航、广告等
+        let cleanHtml = html
           .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
           .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
-          .replace(/<[^>]+>/g, ' ')
-          .replace(/\s+/g, ' ')
-          .trim()
-          .substring(0, 3000) // 限制长度
+          .replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, '')
+          .replace(/<header[^>]*>[\s\S]*?<\/header>/gi, '')
+          .replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, '')
+          .replace(/<aside[^>]*>[\s\S]*?<\/aside>/gi, '')
+          .replace(/<!--[\s\S]*?-->/g, '')
+        
+        // 优先提取文章内容
+        const articleMatch = cleanHtml.match(/<article[^>]*>([\s\S]*?)<\/article>/i)
+        if (articleMatch) {
+          bodyText = articleMatch[1]
+        } else {
+          // 提取body内容
+          const bodyMatch = cleanHtml.match(/<body[^>]*>([\s\S]*?)<\/body>/i)
+          if (bodyMatch) bodyText = bodyMatch[1]
+          else bodyText = cleanHtml
+        }
+        
+        // 提取段落文本
+        const paragraphs: string[] = []
+        const pMatches = bodyText.match(/<p[^>]*>([^<]+)<\/p>/gi) || []
+        pMatches.forEach(p => {
+          const text = p.replace(/<[^>]+>/g, '').trim()
+          if (text.length > 20) paragraphs.push(text)
+        })
+        
+        // 组合提取的内容
+        let extractedText = ''
+        if (title) extractedText += `【标题】${title}\n\n`
+        if (description) extractedText += `【描述】${description}\n\n`
+        if (paragraphs.length > 0) {
+          extractedText += `【正文】\n` + paragraphs.slice(0, 10).join('\n')
+        }
+        
+        // 如果提取内容太少，使用原始方法
+        if (extractedText.length < 100) {
+          extractedText = bodyText
+            .replace(/<[^>]+>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim()
+        }
+        
+        extractedText = extractedText.substring(0, 2000) // 限制长度
         
         if (extractedText.length < 50) {
           return { 
             success: false, 
-            error: '该链接内容过少或需要登录才能访问。请直接复制文章内容粘贴检测。' 
+            error: '⚠️ 链接内容提取失败。\n\n可能原因：\n1. 网页需要登录才能查看\n2. 网页使用了动态加载技术\n3. 微信公众号等平台有防盗链保护\n\n💡 建议：复制文章内容，粘贴到输入框进行检测。' 
           }
         }
         
-        text = `【从链接提取的内容】\n${extractedText}`
+        text = extractedText
       } catch (e: any) {
         return { 
           success: false, 
