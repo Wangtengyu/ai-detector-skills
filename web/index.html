@@ -10,6 +10,9 @@
         .card-shadow { box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
         .example-card { transition: all 0.3s ease; }
         .example-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.15); }
+        .mode-card { transition: all 0.3s ease; cursor: pointer; }
+        .mode-card:hover { transform: translateY(-3px); }
+        .mode-card.active { border-color: #7c3aed; background: #f5f3ff; }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -52,6 +55,37 @@
             </div>
         </section>
 
+        <!-- 案例展示（移到检测区上面） -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">真实案例</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="example-card bg-white rounded-xl p-6 card-shadow">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">高风险</span>
+                        <span class="text-sm text-gray-500">保健品广告</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">量子养生舱宣传语</h3>
+                    <p class="text-sm text-gray-600 mb-3 bg-gray-50 p-3 rounded">"量子共振技术，修复DNA，7天根治糖尿病，100%无副作用"</p>
+                    <div class="text-sm">
+                        <p class="text-red-600 font-medium">🔴 检测结果：高危</p>
+                        <p class="text-gray-500 mt-1">伪科学表述3处 · 绝对化承诺2处 · 疑似虚假宣传</p>
+                    </div>
+                </div>
+                <div class="example-card bg-white rounded-xl p-6 card-shadow">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">极高风险</span>
+                        <span class="text-sm text-gray-500">投资理财</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">原始股权投资骗局</h3>
+                    <p class="text-sm text-gray-600 mb-3 bg-gray-50 p-3 rounded">"某科技公司原始股，即将上市，预期收益10倍，零风险保本"</p>
+                    <div class="text-sm">
+                        <p class="text-red-600 font-medium">💀 检测结果：欺诈性内容</p>
+                        <p class="text-gray-500 mt-1">典型传销话术 · 价格欺诈 · 建议举报</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 检测输入区 -->
         <section class="bg-white rounded-2xl card-shadow p-8 mb-10">
             <div class="flex items-center justify-between mb-6">
@@ -89,93 +123,57 @@
                 <input type="url" id="inputUrl" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="输入文章链接，如：https://example.com/article">
             </div>
 
-            <!-- 检测模式选择 -->
+            <!-- 检测模式选择（改用卡片点击） -->
             <div class="mt-6">
-                <label class="block text-gray-700 font-semibold mb-3">检测模式</label>
+                <label class="block text-gray-700 font-semibold mb-3">检测模式（点击选择）</label>
                 <div class="grid md:grid-cols-2 gap-4">
-                    <label class="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition">
-                        <input type="radio" name="mode" value="serious" checked class="mr-3 mt-1">
-                        <div>
-                            <div class="font-semibold text-lg">🔬 正经版 · AI内容幻觉检测器</div>
-                            <div class="text-sm text-gray-500 mt-1">专业检测模式，输出严谨的风险报告</div>
-                            <div class="text-xs text-gray-400 mt-1">适用：政府材料、学术论文、新闻报道、专业文档</div>
+                    <div onclick="selectMode('serious')" id="mode-serious" class="mode-card active p-5 border-2 border-purple-500 bg-purple-50 rounded-xl">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-2xl">🔬</span>
+                            <div class="font-bold text-lg text-gray-800">正经版 · AI内容幻觉检测器</div>
                         </div>
-                    </label>
-                    <label class="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition">
-                        <input type="radio" name="mode" value="fun" class="mr-3 mt-1">
-                        <div>
-                            <div class="font-semibold text-lg">🎭 趣味版 · AI营销骗局识别器</div>
-                            <div class="text-sm text-gray-500 mt-1">侦探角色断案，识别营销陷阱与消费骗局</div>
-                            <div class="text-xs text-gray-400 mt-1">适用：保健品广告、投资理财、直播带货、网购宣传</div>
+                        <p class="text-sm text-gray-600">专业检测模式，输出严谨的风险报告</p>
+                        <p class="text-xs text-gray-400 mt-1">适用：政府材料、学术论文、新闻报道、专业文档</p>
+                    </div>
+                    <div onclick="selectMode('fun')" id="mode-fun" class="mode-card p-5 border-2 border-gray-200 rounded-xl">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-2xl">🎭</span>
+                            <div class="font-bold text-lg text-gray-800">趣味版 · AI营销骗局识别器</div>
                         </div>
-                    </label>
+                        <p class="text-sm text-gray-600">侦探角色断案，识别营销陷阱与消费骗局</p>
+                        <p class="text-xs text-gray-400 mt-1">适用：保健品广告、投资理财、直播带货、网购宣传</p>
+                    </div>
                 </div>
             </div>
 
             <!-- 侦探角色选择 -->
             <div id="detectiveSelect" class="mt-4 hidden">
-                <label class="block text-gray-700 font-semibold mb-3">选择你的侦探</label>
+                <label class="block text-gray-700 font-semibold mb-3">选择你的侦探（点击选择）</label>
                 <div class="grid grid-cols-5 gap-3">
-                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
-                        <input type="radio" name="detective" value="direnjie" checked class="mb-1">
-                        <span class="text-2xl">🏛️</span>
-                        <span class="text-sm mt-1 font-medium">狄仁杰</span>
-                    </label>
-                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
-                        <input type="radio" name="detective" value="baoqing" class="mb-1">
-                        <span class="text-2xl">⚖️</span>
-                        <span class="text-sm mt-1 font-medium">包青天</span>
-                    </label>
-                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
-                        <input type="radio" name="detective" value="conan" class="mb-1">
-                        <span class="text-2xl">🔍</span>
-                        <span class="text-sm mt-1 font-medium">柯南</span>
-                    </label>
-                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
-                        <input type="radio" name="detective" value="holmes" class="mb-1">
-                        <span class="text-2xl">🧠</span>
-                        <span class="text-sm mt-1 font-medium">福尔摩斯</span>
-                    </label>
-                    <label class="flex flex-col items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 transition text-center">
-                        <input type="radio" name="detective" value="qinfeng" class="mb-1">
-                        <span class="text-2xl">💡</span>
-                        <span class="text-sm mt-1 font-medium">秦风</span>
-                    </label>
+                    <div onclick="selectDetective('direnjie')" id="det-direnjie" class="mode-card active flex flex-col items-center p-4 border-2 border-purple-500 bg-purple-50 rounded-xl text-center">
+                        <span class="text-3xl mb-2">🏛️</span>
+                        <span class="font-medium text-gray-800">狄仁杰</span>
+                    </div>
+                    <div onclick="selectDetective('baoqing')" id="det-baoqing" class="mode-card flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl text-center">
+                        <span class="text-3xl mb-2">⚖️</span>
+                        <span class="font-medium text-gray-800">包青天</span>
+                    </div>
+                    <div onclick="selectDetective('conan')" id="det-conan" class="mode-card flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl text-center">
+                        <span class="text-3xl mb-2">🔍</span>
+                        <span class="font-medium text-gray-800">柯南</span>
+                    </div>
+                    <div onclick="selectDetective('holmes')" id="det-holmes" class="mode-card flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl text-center">
+                        <span class="text-3xl mb-2">🧠</span>
+                        <span class="font-medium text-gray-800">福尔摩斯</span>
+                    </div>
+                    <div onclick="selectDetective('qinfeng')" id="det-qinfeng" class="mode-card flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl text-center">
+                        <span class="text-3xl mb-2">💡</span>
+                        <span class="font-medium text-gray-800">秦风</span>
+                    </div>
                 </div>
             </div>
 
             <button id="detectBtn" onclick="detect()" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-4 rounded-lg font-semibold text-lg hover:opacity-90 transition">🔍 开始检测</button>
-        </section>
-
-        <!-- 案例展示 -->
-        <section class="mb-10">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">真实案例</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="example-card bg-white rounded-xl p-6 card-shadow">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">高风险</span>
-                        <span class="text-sm text-gray-500">保健品广告</span>
-                    </div>
-                    <h3 class="font-bold text-gray-800 mb-2">量子养生舱宣传语</h3>
-                    <p class="text-sm text-gray-600 mb-3 bg-gray-50 p-3 rounded">"量子共振技术，修复DNA，7天根治糖尿病，100%无副作用"</p>
-                    <div class="text-sm">
-                        <p class="text-red-600 font-medium">🔴 检测结果：高危</p>
-                        <p class="text-gray-500 mt-1">伪科学表述3处 · 绝对化承诺2处 · 疑似虚假宣传</p>
-                    </div>
-                </div>
-                <div class="example-card bg-white rounded-xl p-6 card-shadow">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">极高风险</span>
-                        <span class="text-sm text-gray-500">投资理财</span>
-                    </div>
-                    <h3 class="font-bold text-gray-800 mb-2">原始股权投资骗局</h3>
-                    <p class="text-sm text-gray-600 mb-3 bg-gray-50 p-3 rounded">"某科技公司原始股，即将上市，预期收益10倍，零风险保本"</p>
-                    <div class="text-sm">
-                        <p class="text-red-600 font-medium">💀 检测结果：欺诈性内容</p>
-                        <p class="text-gray-500 mt-1">典型传销话术 · 价格欺诈 · 建议举报</p>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- 检测结果 -->
@@ -193,6 +191,16 @@
         <!-- 关于我们 -->
         <section class="bg-white rounded-2xl card-shadow p-8 mb-10">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">关于本项目</h2>
+            
+            <!-- 测试阶段提示 -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-6">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-xl">⚠️</span>
+                    <span class="font-bold text-yellow-800">测试阶段提示</span>
+                </div>
+                <p class="text-yellow-700 text-sm">本项目是一个AI Skill模型，目前处于测试阶段。请勿上传大量数据或敏感信息。如遇到检测失准或功能异常，欢迎反馈。</p>
+            </div>
+
             <div class="grid md:grid-cols-2 gap-8">
                 <div>
                     <h3 class="font-bold text-lg mb-3">🎯 开发初衷</h3>
@@ -257,6 +265,10 @@
     </footer>
 
     <script>
+        // 当前选中的模式和侦探
+        let currentMode = 'serious';
+        let currentDetective = 'direnjie';
+
         function switchInput(type) {
             ['text', 'file', 'url'].forEach(t => {
                 document.getElementById('input-' + t).classList.toggle('hidden', t !== type);
@@ -277,11 +289,34 @@
             }
         }
 
-        document.querySelectorAll('input[name="mode"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                document.getElementById('detectiveSelect').classList.toggle('hidden', this.value !== 'fun');
+        function selectMode(mode) {
+            currentMode = mode;
+            // 更新卡片样式
+            document.getElementById('mode-serious').classList.toggle('active', mode === 'serious');
+            document.getElementById('mode-serious').classList.toggle('border-purple-500', mode === 'serious');
+            document.getElementById('mode-serious').classList.toggle('bg-purple-50', mode === 'serious');
+            document.getElementById('mode-serious').classList.toggle('border-gray-200', mode !== 'serious');
+            
+            document.getElementById('mode-fun').classList.toggle('active', mode === 'fun');
+            document.getElementById('mode-fun').classList.toggle('border-purple-500', mode === 'fun');
+            document.getElementById('mode-fun').classList.toggle('bg-purple-50', mode === 'fun');
+            document.getElementById('mode-fun').classList.toggle('border-gray-200', mode !== 'fun');
+            
+            // 显示/隐藏侦探选择
+            document.getElementById('detectiveSelect').classList.toggle('hidden', mode !== 'fun');
+        }
+
+        function selectDetective(detective) {
+            currentDetective = detective;
+            const detectives = ['direnjie', 'baoqing', 'conan', 'holmes', 'qinfeng'];
+            detectives.forEach(d => {
+                const el = document.getElementById('det-' + d);
+                el.classList.toggle('active', d === detective);
+                el.classList.toggle('border-purple-500', d === detective);
+                el.classList.toggle('bg-purple-50', d === detective);
+                el.classList.toggle('border-gray-200', d !== detective);
             });
-        });
+        }
 
         function detect() {
             let text = '';
@@ -289,8 +324,7 @@
             if (inputType === 'text') text = document.getElementById('inputText').value.trim();
             else if (inputType === 'url') text = '【链接检测功能开发中】链接：' + document.getElementById('inputUrl').value.trim();
             if (!text) { alert('请输入要检测的内容'); return; }
-            const mode = document.querySelector('input[name="mode"]:checked').value;
-            const detective = document.querySelector('input[name="detective"]:checked')?.value || 'direnjie';
+            
             document.getElementById('detectBtn').disabled = true;
             document.getElementById('detectBtn').textContent = '⏳ 检测中...';
             
@@ -299,20 +333,20 @@
             fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text, mode, detective })
+                body: JSON.stringify({ text, mode: currentMode, detective: currentDetective })
             })
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    displayResult(data.data, mode);
+                    displayResult(data.data, currentMode);
                 } else {
                     throw new Error('API error');
                 }
             })
             .catch(() => {
                 setTimeout(() => {
-                    const result = simulateDetection(text, mode, detective);
-                    displayResult(result, mode);
+                    const result = simulateDetection(text, currentMode, currentDetective);
+                    displayResult(result, currentMode);
                 }, 800);
             })
             .finally(() => {
