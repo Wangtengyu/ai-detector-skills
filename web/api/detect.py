@@ -1,7 +1,11 @@
-# Vercel Serverless Function - AI Content Detector
-import json
+# Vercel Serverless Function - AI Content Detector (Flask Style)
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 import requests
+
+app = Flask(__name__)
+CORS(app)
 
 AI_PROVIDER = os.environ.get('AI_PROVIDER', 'deepseek')
 AI_API_KEY = os.environ.get('AI_API_KEY', '')
@@ -65,75 +69,60 @@ def detect_keywords(text):
         if kw in text: issues.append(f'🎭 疑似虚假背书："{kw}"')
     return issues
 
-def handler(event, context):
-    """Vercel Serverless Function Handler"""
+@app.route('/api/detect', methods=['POST', 'OPTIONS'])
+def detect():
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+    
     try:
-        # 解析请求体
-        body = json.loads(event.get('body', '{}')) if isinstance(event.get('body'), str) else event.get('body', {})
-        
-        text = body.get('text', '')
-        mode = body.get('mode', 'serious')
-        detective = body.get('detective', 'direnjie')
+        data = request.get_json()
+        text = data.get('text', '')
+        mode = data.get('mode', 'serious')
+        detective = data.get('detective', 'direnjie')
         
         if not text:
-            return {
-                'statusCode': 400,
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                'body': json.dumps({'success': False, 'error': '请输入内容'})
-            }
+            return jsonify({'success': False, 'error': '请输入内容'}), 400
         
         # 调用AI模型
         ai_result, error = detect_with_deepseek(text, mode, detective)
         
         if ai_result:
-            return {
-                'statusCode': 200,
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                'body': json.dumps({
-                    'success': True,
-                    'data': {
-                        'risk_level': 'high' if '高危' in ai_result or '🚨' in ai_result else 'medium' if '中危' in ai_result else 'low',
-                        'issues': [],
-                        'report': ai_result,
-                        'suggestions': [],
-                        'ai_model': AI_PROVIDER
-                    }
-                })
-            }
+            return jsonify({
+                'success': True,
+                'data': {
+                    'risk_level': 'high' if '高危' in ai_result or '🚨' in ai_result else 'medium' if '中危' in ai_result else 'low',
+                    'issues': [],
+                    'report': ai_result,
+                    'suggestions': [],
+                    'ai_model': AI_PROVIDER
+                }
+            })
         else:
             # 回退到关键词检测
             issues = detect_keywords(text)
             risk = 'high' if len(issues) >= 4 else 'medium' if len(issues) >= 2 else 'low' if issues else 'safe'
-            return {
-                'statusCode': 200,
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                'body': json.dumps({
-                    'success': True,
-                    'data': {
-                        'risk_level': risk,
-                        'issues': issues,
-                        'report': f"检测到 {len(issues)} 处可疑内容。" if issues else "未检测到明显问题。",
-                        'suggestions': ['删除高风险内容'] if risk == 'high' else [],
-                        'ai_model': 'keywords',
-                        'error': error
-                    }
-                })
-            }
+            return jsonify({
+                'success': True,
+                'data': {
+                    'risk_level': risk,
+                    'issues': issues,
+                    'report': f"检测到 {len(issues)} 处可疑内容。" if issues else "未检测到明显问题。",
+                    'suggestions': ['删除高风险内容'] if risk == 'high' else [],
+                    'ai_model': 'keywords',
+                    'error': error
+                }
+            })
     except Exception as e:
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            'body': json.dumps({'success': False, 'error': str(e)})
-        }
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/health', methods=['GET'])
+def health():
+    return jsonify({
+        'status': 'ok',
+        'ai_provider': AI_PROVIDER,
+        'has_api_key': bool(AI_API_KEY)
+    })
+
+# Vercel需要这个
+if __name__ == '__main__':
+    app.run(debug=True)
