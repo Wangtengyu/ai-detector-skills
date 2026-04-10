@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI内容检测器 - 检测幻觉 · 识别骗局 · 保护你的内容</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .card-shadow { box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
@@ -13,6 +14,19 @@
         .mode-card { transition: all 0.3s ease; cursor: pointer; }
         .mode-card:hover { transform: translateY(-3px); }
         .mode-card.active { border-color: #7c3aed; background: #f5f3ff; }
+        
+        /* Markdown渲染样式 */
+        #resultContent h1, #resultContent h2, #resultContent h3 { 
+            font-weight: bold; margin: 1rem 0 0.5rem 0; 
+        }
+        #resultContent h1 { font-size: 1.5rem; }
+        #resultContent h2 { font-size: 1.25rem; }
+        #resultContent h3 { font-size: 1.1rem; }
+        #resultContent strong { font-weight: bold; color: #1f2937; }
+        #resultContent ul, #resultContent ol { margin: 0.5rem 0; padding-left: 1.5rem; }
+        #resultContent li { margin: 0.25rem 0; }
+        #resultContent p { margin: 0.5rem 0; line-height: 1.6; }
+        #resultContent code { background: #f3f4f6; padding: 0.125rem 0.25rem; border-radius: 0.25rem; font-size: 0.9em; }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -380,7 +394,11 @@
         function displayResult(result, mode) {
             const riskColors = { high: 'bg-red-50 border-red-500 text-red-700', medium: 'bg-yellow-50 border-yellow-500 text-yellow-700', low: 'bg-blue-50 border-blue-500 text-blue-700', safe: 'bg-green-50 border-green-500 text-green-700' };
             const riskLabels = { high: '🔴 高风险内容', medium: '🟡 中风险内容', low: '🔵 低风险内容', safe: '🟢 安全内容' };
-            let html = `<div class="border-l-4 ${riskColors[result.risk_level]} p-5 rounded-r-lg mb-5"><h3 class="font-bold text-xl mb-2">${riskLabels[result.risk_level]}</h3><p class="whitespace-pre-line">${result.report}</p></div>`;
+            
+            // 渲染Markdown
+            const renderedReport = typeof marked !== 'undefined' ? marked.parse(result.report) : result.report.replace(/\n/g, '<br>');
+            
+            let html = `<div class="border-l-4 ${riskColors[result.risk_level]} p-5 rounded-r-lg mb-5"><h3 class="font-bold text-xl mb-2">${riskLabels[result.risk_level]}</h3><div class="prose prose-sm max-w-none">${renderedReport}</div></div>`;
             if (result.issues.length > 0) html += `<div class="mb-5"><h4 class="font-semibold text-gray-700 mb-3">📋 检测到的问题（${result.issues.length}处）：</h4><ul class="space-y-2 bg-gray-50 p-4 rounded-lg">${result.issues.map(i => `<li class="text-gray-600">${i}</li>`).join('')}</ul></div>`;
             html += `<div><h4 class="font-semibold text-gray-700 mb-3">💡 建议操作：</h4><ul class="list-disc list-inside space-y-1 text-gray-600">${result.suggestions.map(s => `<li>${s}</li>`).join('')}</ul></div>`;
             document.getElementById('resultContent').innerHTML = html;
