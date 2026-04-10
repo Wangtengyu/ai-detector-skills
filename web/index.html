@@ -293,12 +293,32 @@
             const detective = document.querySelector('input[name="detective"]:checked')?.value || 'direnjie';
             document.getElementById('detectBtn').disabled = true;
             document.getElementById('detectBtn').textContent = '⏳ 检测中...';
-            setTimeout(() => {
-                const result = simulateDetection(text, mode, detective);
-                displayResult(result, mode);
+            
+            // 优先调用后端API，失败则使用本地模拟
+            const apiUrl = 'https://ai-detector-api.vercel.app/api/detect';
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, mode, detective })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    displayResult(data.data, mode);
+                } else {
+                    throw new Error('API error');
+                }
+            })
+            .catch(() => {
+                setTimeout(() => {
+                    const result = simulateDetection(text, mode, detective);
+                    displayResult(result, mode);
+                }, 800);
+            })
+            .finally(() => {
                 document.getElementById('detectBtn').disabled = false;
                 document.getElementById('detectBtn').textContent = '🔍 开始检测';
-            }, 1500);
+            });
         }
 
         function simulateDetection(text, mode, detective) {
