@@ -357,12 +357,15 @@
 
         function simulateDetection(text, mode, detective) {
             const issues = [];
-            const pseudoKeywords = ['量子', '纳米', 'DNA', '干细胞', '基因修复', '能量场', '共振', '磁场'];
-            const absoluteKeywords = ['根治', '100%', '绝对', '保证', '包治', '无副作用', '零风险', '必'];
-            const scamKeywords = ['原始股', '高额回报', '躺赚', '被动收入', '快速致富', '保本保息', '内部消息'];
+            const pseudoKeywords = ['量子', '纳米', 'DNA', '干细胞', '基因修复', '能量场', '共振', '磁场', '远红外线', '负离子', '氢氧', '富氢', '量子共振', '纳米技术', '基因编辑', '端粒酶', '端粒修复', '线粒体', 'ATP', '生物电', '微电流'];
+            const absoluteKeywords = ['根治', '100%', '绝对', '保证', '包治', '无副作用', '零风险', '必', '包过', '必过', '百分百', '彻底治愈', '永不复发', '完全康复'];
+            const scamKeywords = ['原始股', '高额回报', '躺赚', '被动收入', '快速致富', '保本保息', '内部消息', '限量', '最后', '仅剩', '抢购', '买一送一', '限时', '特价', '优惠'];
+            const fakeEndorsement = ['NASA', '诺贝尔', '中科院', '国家专利', '央视推荐', '专家推荐', '三甲医院', '临床试验'];
+            
             pseudoKeywords.forEach(k => { if (text.includes(k)) issues.push(`⚠️ 伪科学表述："${k}"`); });
             absoluteKeywords.forEach(k => { if (text.includes(k)) issues.push(`❌ 绝对化承诺："${k}"`); });
-            scamKeywords.forEach(k => { if (text.includes(k)) issues.push(`🚨 骗局关键词："${k}"`); });
+            scamKeywords.forEach(k => { if (text.includes(k)) issues.push(`🚨 营销话术："${k}"`); });
+            fakeEndorsement.forEach(k => { if (text.includes(k)) issues.push(`🎭 疑似虚假背书："${k}"`); });
             const riskLevel = issues.length >= 4 ? 'high' : issues.length >= 2 ? 'medium' : issues.length >= 1 ? 'low' : 'safe';
             const detectiveNames = { direnjie: '狄仁杰', baoqing: '包青天', conan: '柯南', holmes: '福尔摩斯', qinfeng: '秦风' };
             let report = mode === 'fun' ? `【${detectiveNames[detective]}断案】\n\n` : '';

@@ -47,10 +47,11 @@ def detect_with_deepseek(text, mode, detective='direnjie'):
     except Exception as e:
         return None, f"请求失败: {str(e)}"
 
-# 关键词检测（备用）
-PSEUDO = ['量子', '纳米', 'DNA', '干细胞', '基因修复', '能量场', '共振', '磁场']
-ABSOLUTE = ['根治', '100%', '绝对', '保证', '包治', '无副作用', '零风险']
-SCAM = ['原始股', '高额回报', '躺赚', '被动收入', '快速致富', '保本保息']
+# 关键词检测（备用）- 扩充版
+PSEUDO = ['量子', '纳米', 'DNA', '干细胞', '基因修复', '能量场', '共振', '磁场', '远红外线', '负离子', '氢氧', '富氢', '量子共振', '纳米技术', '基因编辑', '端粒酶', '端粒修复', '线粒体', 'ATP', '生物电', '微电流']
+ABSOLUTE = ['根治', '100%', '绝对', '保证', '包治', '无副作用', '零风险', '必', '包过', '必过', '百分百', '彻底治愈', '永不复发', '完全康复']
+SCAM = ['原始股', '高额回报', '躺赚', '被动收入', '快速致富', '保本保息', '内部消息', '限量', '最后', '仅剩', '抢购', '买一送一', '限时', '特价', '优惠']
+FAKE_ENDORSEMENT = ['NASA', '诺贝尔', '中科院', '国家专利', '央视推荐', '专家推荐', '三甲医院', '临床试验']
 
 def detect_keywords(text):
     issues = []
@@ -59,7 +60,9 @@ def detect_keywords(text):
     for kw in ABSOLUTE:
         if kw in text: issues.append(f'❌ 绝对化："{kw}"')
     for kw in SCAM:
-        if kw in text: issues.append(f'🚨 骗局："{kw}"')
+        if kw in text: issues.append(f'🚨 营销话术："{kw}"')
+    for kw in FAKE_ENDORSEMENT:
+        if kw in text: issues.append(f'🎭 疑似虚假背书："{kw}"')
     return issues
 
 def handler(event, context):
